@@ -10,8 +10,9 @@ import { NavBar } from './navigation/navbar';
 
 function App() {
   return <>
-    <NavBar/>
+   
     <BrowserRouter>
+    <NavBar></NavBar>
       <Routes>
         <Route path='/' element={<SignInPage/>}/>
         <Route path='/home' element={<HomePage/>}/>
