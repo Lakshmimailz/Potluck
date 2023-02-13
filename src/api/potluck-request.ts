@@ -26,38 +26,63 @@ export enum Allergen {
     SHELLFISH = "SHELLFISH",
     SOY = "SOY",
     WHEAT = "WHEAT",
-    TREENUT = "TREENUT"
+    TREENUT = "TREE_NUT"
 }
 
 
 
-export async function createLukker():Promise<LukkerUserInfo>{
-    console.log("Hello")
+export async function getAllUsernames():Promise<UserSignIn[]>{
+    const query = `query FindAllUsernames{
+        lukkers{
+          username
+        }
+      }`;
 
-    const testLukker: LukkerUserCreation = {
-        username: "EdwardDee",
-        password:"password",
-        fname: "Edward",
-        lname: "Dee",
-        allergies: [Allergen.MILK, Allergen.EGG]
-    }
+      const body = JSON.stringify({query:query});
+
+      const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body, headers:{"Content-Type":"application/json"}});
+      const responseBody = await httpResponse.json();
+      const userList:UserSignIn[] = responseBody.data;
+      return userList;
+}
+
+
+
+export async function createLukker(newLukker: LukkerUserCreation):Promise<LukkerUserInfo>{
+
+    
+
     const httpResponse = await fetch("http://127.0.0.1:8000/lukkers", {
         method: "POST",
-        body:JSON.stringify(testLukker),
+        body:JSON.stringify(newLukker),
         headers:{
             "Content-Type":"application/json"
         }
     });
 
     const createdLukker:LukkerUserInfo = await httpResponse.json();
+    console.log(createdLukker);
     return createdLukker;
 }
   
 
 
 
-// export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo> {
-
-//     return 
+export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo> {
+    console.log("Hello")
     
-// }
+    const httpResponse = await fetch("http://127.0.0.1:8000/verify", {
+        method: "POST",
+        body:JSON.stringify(user),
+        headers:{
+            "Content-Type":"application/json"
+        }
+    });
+    
+
+    const checkedUser:LukkerUserInfo = await httpResponse.json();
+    console.log(checkedUser);
+
+    return checkedUser;
+    
+}
