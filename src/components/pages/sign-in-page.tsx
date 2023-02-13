@@ -24,7 +24,7 @@ export function SignInPage(){
 
         //     }
         // }
-        ()=>verifyUsername(form)
+        verifyUsername(form);
 
       }
     
