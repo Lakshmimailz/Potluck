@@ -40,7 +40,8 @@ export type AddSoyAllergiesAction ={type:"SET_SOYALLERGIES"};
 export type AddWheatAllergiesAction ={type:"SET_WHEATALLERGIES"};
 export type AddTreenutAllergiesAction ={type:"SET_TREENUTALLERGIES"};
 
-export type LukkerUserInfoAction =AddUserNameAction | AddFirstNameAction | AddLastNameAction | AddAllergiesAction
+export type LukkerUserInfoAction =AddUserNameAction | AddFirstNameAction | AddLastNameAction | AddMilkAllergiesAction | AddEggAllergiesAction |
+AddFishAllergiesAction | AddShellfishAllergiesAction | AddSoyAllergiesAction | AddWheatAllergiesAction | AddTreenutAllergiesAction
 
 export function todoReducer(state:RegistrationState, action:LukkerUserInfoAction) :RegistrationState{
     const nextState: RegistrationState = JSON.parse(JSON.stringify(state));
@@ -48,6 +49,15 @@ export function todoReducer(state:RegistrationState, action:LukkerUserInfoAction
     switch(action.type){
         case "SET_USERNAME":{
             nextState.userInfo.username=action.payload;
+            return nextState;
+        }
+       
+        case "SET_FIRSTNAME":{
+            nextState.userInfo.fname=action.payload;
+            return nextState;
+        }
+        case "SET_LASTNAME":{
+            nextState.userInfo.lname=action.payload;
             return nextState;
         }
         case "SET_MILKALLERGIES":{
@@ -59,8 +69,68 @@ export function todoReducer(state:RegistrationState, action:LukkerUserInfoAction
                 nextState.userInfo.allergies.push(Allergen.MILK);
                 return nextState;
             }
-
         }
+        case "SET_EGGALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.EGG)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.EGG);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.EGG);
+                return nextState;
+            }
+        }
+        case "SET_FISHALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.FISH)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.FISH);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.FISH);
+                return nextState;
+            }
+        }
+        case "SET_SHELLFISHALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.SHELLFISH)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.SHELLFISH);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.SHELLFISH);
+                return nextState;
+            }
+        }
+        case "SET_SOYALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.SOY)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.SOY);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.SOY);
+                return nextState;
+            }
+        }
+        case "SET_WHEATALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.WHEAT)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.WHEAT);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.WHEAT);
+                return nextState;
+            }
+        }
+        case "SET_TREENUTALLERGIES":{
+
+            if(nextState.userInfo.allergies.includes(Allergen.TREENUT)){
+                nextState.userInfo.allergies = nextState.userInfo.allergies.filter(a => a !== Allergen.TREENUT);
+                return nextState
+            }else{
+                nextState.userInfo.allergies.push(Allergen.TREENUT);
+                return nextState;
+            }
+        }
+
 
     }
 
