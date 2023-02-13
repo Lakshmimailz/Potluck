@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createLukker } from "../../api/potluck-request";
 
 export type SignInPage ={
     username: string
@@ -22,7 +23,7 @@ export function SignInPage(){
         <button onClick={SignInPage} >SIGN IN</button>
 
         <label htmlFor="NewUser">NewUser: </label>
-        <button onClick={SignInPage}>SIGN UP</button>
+        <button onClick={createLukker}>SIGN UP</button>
 
         </fieldset>
     </>
