@@ -10,13 +10,11 @@ export function NavBar(){
     return <>
         <ul>
             <li>
-                 <Link to="/">SignIn Page</Link>
-                 
-                              
+                 <Link to="/">SignIn Page</Link>                  
             </li>
             <li>
                 <Link to="registration">Registration Page</Link>
-                </li>
+            </li>
         </ul>
     </>
 }
