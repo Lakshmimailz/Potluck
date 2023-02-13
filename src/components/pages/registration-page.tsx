@@ -11,8 +11,7 @@ export type RegistrationPage ={
    
 }
 
-export function RegistrationPage(){
-    
+export function RegistrationPage(){  
    
   
 
