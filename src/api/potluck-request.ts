@@ -8,7 +8,7 @@ export type LukkerUserInfo = {
     username: string
     fname: string
     lname: string
-    allergies: [Allergen]
+    allergies: Allergen[]
 }
 
 export type LukkerUserCreation = {
@@ -61,15 +61,20 @@ export async function createLukker(newLukker: LukkerUserCreation):Promise<Lukker
     });
 
     const createdLukker:LukkerUserInfo = await httpResponse.json();
-    console.log(createdLukker);
+//    console.log(createdLukker);
     return createdLukker;
 }
   
+export type LukkerUserInfoSearch = {
+    userId: number
+    username: string
+    fname: string
+    lname: string
+    allergies: Allergen[]
+}
 
 
-
-export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo> {
-    console.log("Hello")
+export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfoSearch> {
     
     const httpResponse = await fetch("http://127.0.0.1:8000/verify", {
         method: "POST",
@@ -78,11 +83,8 @@ export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo> {
             "Content-Type":"application/json"
         }
     });
-    
 
-    const checkedUser:LukkerUserInfo = await httpResponse.json();
-    console.log(checkedUser);
-
+    const checkedUser:LukkerUserInfoSearch = await httpResponse.json();
     return checkedUser;
     
 }

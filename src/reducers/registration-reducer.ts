@@ -27,23 +27,25 @@ export type LukkerUserCreation = {
 
 export type RegistrationState ={
     userInfo:LukkerUserCreation
-    
+    confirmedPassword: string
 }
-export type AddUserNameAction ={type:"SET_USERNAME", payload:string};
-export type AddFirstNameAction ={type:"SET_FIRSTNAME", payload:string};
-export type AddLastNameAction ={type:"SET_LASTNAME", payload:string};
-export type AddMilkAllergiesAction ={type:"SET_MILKALLERGIES" };
-export type AddEggAllergiesAction ={type:"SET_EGGALLERGIES"};
-export type AddFishAllergiesAction ={type:"SET_FISHALLERGIES"};
-export type AddShellfishAllergiesAction ={type:"SET_SHELLFISHALLERGIES"};
-export type AddSoyAllergiesAction ={type:"SET_SOYALLERGIES"};
-export type AddWheatAllergiesAction ={type:"SET_WHEATALLERGIES"};
-export type AddTreenutAllergiesAction ={type:"SET_TREENUTALLERGIES"};
+export type SetUserNameAction ={type:"SET_USERNAME", payload:string};
+export type SetFirstNameAction ={type:"SET_FIRSTNAME", payload:string};
+export type SetLastNameAction ={type:"SET_LASTNAME", payload:string};
+export type SetPasswordAction ={type:"SET_PASSWORD", payload:string};
+export type SetConfirmPasswordAction ={type:"SET_CONFIRM_PASSWORD", payload:string};
+export type SetMilkAllergiesAction ={type:"SET_MILKALLERGIES" };
+export type SetEggAllergiesAction ={type:"SET_EGGALLERGIES"};
+export type SetFishAllergiesAction ={type:"SET_FISHALLERGIES"};
+export type SetShellfishAllergiesAction ={type:"SET_SHELLFISHALLERGIES"};
+export type SetSoyAllergiesAction ={type:"SET_SOYALLERGIES"};
+export type SetWheatAllergiesAction ={type:"SET_WHEATALLERGIES"};
+export type SetTreenutAllergiesAction ={type:"SET_TREENUTALLERGIES"};
 
-export type LukkerUserInfoAction =AddUserNameAction | AddFirstNameAction | AddLastNameAction | AddMilkAllergiesAction | AddEggAllergiesAction |
-AddFishAllergiesAction | AddShellfishAllergiesAction | AddSoyAllergiesAction | AddWheatAllergiesAction | AddTreenutAllergiesAction
+export type LukkerUserInfoAction = SetUserNameAction | SetFirstNameAction | SetLastNameAction | SetPasswordAction |SetConfirmPasswordAction| SetMilkAllergiesAction | SetEggAllergiesAction |
+SetFishAllergiesAction | SetShellfishAllergiesAction | SetSoyAllergiesAction | SetWheatAllergiesAction | SetTreenutAllergiesAction
 
-export function todoReducer(state:RegistrationState, action:LukkerUserInfoAction) :RegistrationState{
+export function registrationReducer(state:RegistrationState, action:LukkerUserInfoAction) :RegistrationState{
     const nextState: RegistrationState = JSON.parse(JSON.stringify(state));
 
     switch(action.type){
@@ -58,6 +60,14 @@ export function todoReducer(state:RegistrationState, action:LukkerUserInfoAction
         }
         case "SET_LASTNAME":{
             nextState.userInfo.lname=action.payload;
+            return nextState;
+        }
+        case "SET_PASSWORD":{
+            nextState.userInfo.password=action.payload;
+            return nextState;
+        }
+        case "SET_CONFIRM_PASSWORD":{
+            nextState.confirmedPassword=action.payload;
             return nextState;
         }
         case "SET_MILKALLERGIES":{
