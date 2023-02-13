@@ -48,19 +48,13 @@ export async function getAllUsernames():Promise<UserSignIn[]>{
 
 
 
-export async function createLukker():Promise<LukkerUserInfo>{
-    const testLukker: LukkerUserCreation = {
-        username: "JoeShmo",
-        password:"passpass",
-        fname: "Joe",
-        lname: "Shmo",
-        allergies: [Allergen.MILK, Allergen.TREENUT]
-    }
+export async function createLukker(newLukker: LukkerUserCreation):Promise<LukkerUserInfo>{
+
     
 
     const httpResponse = await fetch("http://127.0.0.1:8000/lukkers", {
         method: "POST",
-        body:JSON.stringify(testLukker),
+        body:JSON.stringify(newLukker),
         headers:{
             "Content-Type":"application/json"
         }
