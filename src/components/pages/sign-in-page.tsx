@@ -15,14 +15,15 @@ export function SignInPage(){
       async function handleUsernameVerification(){
 
         let usernameChecker = await getAllUsernames();
-        console.log(usernameChecker);
-        for (const users of usernameChecker){
-            if (users.username === form.username){
-                existingUsernameBool = false;
+        
+        console.log(usernameChecker.includes(form));
+        // for (const users of usernameChecker){
+        //     if (users.username === form.username){
+        //         existingUsernameBool = false;
 
 
-            }
-        }
+        //     }
+        // }
 //        ()=>verifyUsername(form)
 
       }
@@ -38,7 +39,7 @@ export function SignInPage(){
         <label htmlFor="password">PASSWORD: </label>
         <input type="password" placeholder="password" onChange={e => setForm({...form, password:e.target.value})} />
 
-        <button onClick={createLukker} >SIGN IN</button>
+        <button onClick={handleUsernameVerification} >SIGN IN</button>
         <br /><br />
 
         <label htmlFor="NewUser">New User? </label>
