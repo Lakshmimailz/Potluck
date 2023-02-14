@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react"
-import { Allergen, createLukker } from "../../api/potluck-request"
+import { Allergen, createLukker, LukkerUserInfo } from "../../api/potluck-request"
 import { registrationReducer, RegistrationState } from "../../reducers/registration-reducer"
 
 
@@ -49,7 +49,7 @@ export function RegistrationPage(){
         dispatch({type: "SET_CONFIRM_PASSWORD", payload: event.target.value});
     }
 
-    function handleRegistrationAction(){
+    async function handleRegistrationAction(){
         if (trackerState.confirmedPassword !== trackerState.userInfo.password){
             alert("Password does not match Confirmed");
         }
@@ -61,7 +61,15 @@ export function RegistrationPage(){
                 lname:trackerState.userInfo.lname,
                 allergies: trackerState.userInfo.allergies
             }
-            createLukker(newUser);
+            //  createLukker(newUser)
+            //  .then((res:LukkerUserInfo) => {
+            //     localStorage.setItem("userid",String(res.userId));
+            //  })
+
+            const returnedLukker:LukkerUserInfo = await createLukker(newUser);
+            localStorage.setItem("userid",String(returnedLukker.userId));     
+                
+                         
         }
     }
 
