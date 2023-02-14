@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function HomePage(){
 
@@ -9,12 +10,13 @@ export function HomePage(){
     <div style = {{display: 'flex', flexDirection: 'row'}}>
       <div style={{backgroundColor: 'powderblue',    }}>
         <h1>Invited Potlukks    </h1>              
-        
+        <Link to="/potluckdetailsguestpage">Company Bash</Link>
       </div>
       <div style={{backgroundColor: 'skyblue',  }}>
-      <h1>Attending Potlukks  </h1>
-      <p>Ryan's Shindig  </p>
-      <p>Rotary Pizza Party  </p>
+      <h1>Hosted Potlukks  </h1>
+      <Link to="/potluckdetailshostpage">Ryan's Shindig  </Link><br/>
+      <Link to="/potluckdetailshostpage">Rotary Pizza Party  </Link>
+      
      
 
       </div>
