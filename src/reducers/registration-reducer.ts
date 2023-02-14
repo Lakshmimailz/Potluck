@@ -1,29 +1,4 @@
-import { stringify } from "querystring"
-import { Allergen } from "../api/potluck-request"
-
-
-
-
-export type UserSignIn = {
-    username: string
-    password: string
-}
-
-export type LukkerUserInfo = {
-    userId: number
-    username: string
-    fname: string
-    lname: string
-    allergies: [Allergen]
-}
-
-export type LukkerUserCreation = {
-    username: string
-    password: string
-    fname: string
-    lname: string
-    allergies: Allergen[]
-}
+import { Allergen, LukkerUserCreation } from "../api/potluck-request"
 
 export type RegistrationState ={
     userInfo:LukkerUserCreation

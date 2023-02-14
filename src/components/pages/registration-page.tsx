@@ -1,5 +1,6 @@
-import { useReducer, useState } from "react"
-import { Allergen, createLukker, LukkerUserInfo } from "../../api/potluck-request"
+import { useReducer } from "react"
+import { useNavigate } from "react-router-dom"
+import { Allergen, createLukker, getAllUsernames, LukkerUserInfo } from "../../api/potluck-request"
 import { registrationReducer, RegistrationState } from "../../reducers/registration-reducer"
 
 
@@ -24,9 +25,8 @@ const initialState: RegistrationState ={
 }
 
 
-
 export function RegistrationPage(){
-
+    const navigation = useNavigate();
     const[trackerState, dispatch] = useReducer(registrationReducer, initialState); 
 
     function handleSetUsername(event:React.ChangeEvent<HTMLInputElement>){
@@ -49,47 +49,78 @@ export function RegistrationPage(){
         dispatch({type: "SET_CONFIRM_PASSWORD", payload: event.target.value});
     }
 
-    async function handleRegistrationAction(){
+    async function handleRegistrationParametersAction(){
+        let specialCharacterBool = false;
+        let plength = trackerState.confirmedPassword.length;
+        let existingUsers = await getAllUsernames();
+        if(trackerState.userInfo.username.indexOf(' ') >= 0){
+            alert("Cant have spaces in username.\nEw.");
+            return;
+        }
         if (trackerState.confirmedPassword !== trackerState.userInfo.password){
             alert("Password does not match Confirmed");
+            return;
         }
-        else{
-            const newUser: RegistrationForm = {
-                username: trackerState.userInfo.username,
-                password: trackerState.userInfo.password,
-                fname:trackerState.userInfo.fname,
-                lname:trackerState.userInfo.lname,
-                allergies: trackerState.userInfo.allergies
+        if (trackerState.userInfo.username.length <= 3){
+            alert("Username should be more than 3 characters");
+            return;
+        }
+        for(const user of existingUsers){
+            if (user.username === trackerState.userInfo.username){
+                alert("Username Already Exists :(\n Pick a better one!");
+                return;
             }
-            //  createLukker(newUser)
-            //  .then((res:LukkerUserInfo) => {
-            //     localStorage.setItem("userid",String(res.userId));
-            //  })
-
-            const returnedLukker:LukkerUserInfo = await createLukker(newUser);
-            localStorage.setItem("userid",String(returnedLukker.userId));     
-                
-                         
         }
+        if(plength < 10){
+            alert("Your password isn't long enough \nMust contain at least 10 characters.");
+            return
+        }
+        for (const char of trackerState.confirmedPassword){
+            if (!(char.match(/[a-z]/i))){
+                specialCharacterBool = true;
+                break;
+            }
+        }
+        if(!specialCharacterBool){
+            alert("Your password MUST contain: \n1 number.\n OR\n1 Special Character");
+            return;
+        }
+        handleRegistrationAction();
+    }   
+
+    async function handleRegistrationAction(){
+        const newUser: RegistrationForm = {
+            username: trackerState.userInfo.username,
+            password: trackerState.userInfo.password,
+            fname:trackerState.userInfo.fname,
+            lname:trackerState.userInfo.lname,
+            allergies: trackerState.userInfo.allergies
+        }
+
+        const returnedLukker:LukkerUserInfo = await createLukker(newUser);
+        localStorage.setItem("userid",String(returnedLukker.userId));
+
+        alert("Registration Successful!!!");
+        navigation("/home");
     }
 
     return <>
         <h1>Registration Page</h1>
         <fieldset>
-        <label htmlFor="username">USERNAME: </label>
-        <input type="text" placeholder="Username" onChange={handleSetUsername} /> <br />
+            <label htmlFor="username">USERNAME: </label>
+            <input type="text" placeholder="Username" onChange={handleSetUsername} /> <br />
 
-        <label htmlFor="fname">FIRST NAME: </label>
-        <input type="text" placeholder="First Name" onChange={handleSetFname} /> <br />
+            <label htmlFor="fname">FIRST NAME: </label>
+            <input type="text" placeholder="First Name" onChange={handleSetFname} /> <br />
 
-        <label htmlFor="lname">LAST NAME: </label>
-        <input type="text" placeholder="Last Name" onChange={handleSetLname}/> <br />
+            <label htmlFor="lname">LAST NAME: </label>
+            <input type="text" placeholder="Last Name" onChange={handleSetLname}/> <br />
 
-        <label htmlFor="password">PASSWORD: </label>
-        <input type="password" placeholder="Password" onChange={handleSetPassword} /> <br />
+            <label htmlFor="password">PASSWORD: </label>
+            <input type="password" placeholder="Password" required onChange={handleSetPassword} /> <br />
 
-        <label htmlFor="confirmpassword">CONFIRM PASSWORD: </label>
-        <input type="password" placeholder="Confirm Password" onChange={handleSetConfirmPassword}/>
+            <label htmlFor="confirmpassword">CONFIRM PASSWORD: </label>
+            <input type="password" placeholder="Confirm Password" onChange={handleSetConfirmPassword}/>
          </fieldset>
 
          <fieldset>
@@ -122,9 +153,9 @@ export function RegistrationPage(){
             <label htmlFor="text">TREENUT</label>
             <input type="checkbox" name="Treenut" onChange={()=>dispatch({type:"SET_TREENUTALLERGIES"})} />
 
-                </fieldset>
+        </fieldset>
 
-                <button onClick={handleRegistrationAction}>REGISTER</button>
+        <button onClick={handleRegistrationParametersAction}>REGISTER</button>
                 
     </>
 }

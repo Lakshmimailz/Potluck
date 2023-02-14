@@ -7,10 +7,6 @@ export type SignInForm ={
     username: string
     password: string
 }
-export type UserSignIn = {
-  username: string
-  password: string
-}
 
 export function SignInPage(){
   const navigation = useNavigate();
