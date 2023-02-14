@@ -3,6 +3,10 @@ export type UserSignIn = {
     password: string
 }
 
+export type UserList = {
+    username: string
+}
+
 export type LukkerUserInfo = {
     userId: number
     username: string
@@ -31,7 +35,7 @@ export enum Allergen {
 
 
 
-export async function getAllUsernames():Promise<UserSignIn[]>{
+export async function getAllUsernames():Promise<UserList[]>{
     const query = `query FindAllUsernames{
         lukkers{
           username
@@ -42,7 +46,7 @@ export async function getAllUsernames():Promise<UserSignIn[]>{
 
       const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body, headers:{"Content-Type":"application/json"}});
       const responseBody = await httpResponse.json();
-      const userList:UserSignIn[] = responseBody.data.username;
+      const userList:UserList[] = responseBody.data.lukkers;
       return userList;
 }
 
