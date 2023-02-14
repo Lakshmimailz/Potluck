@@ -1,15 +1,20 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styleContext } from "../App"
 
 
 export function NavBar(){
+    const navigation = useNavigate();
     
     const {setGlobalStyle} = useContext(styleContext)
+    function handleClearStorage(){
+        localStorage.removeItem("userid"); 
+        navigation("/");
+    }
 
     return <>
         <ul>
-            <button>LOGOUT</button>
+            <button onClick={handleClearStorage}>LOGOUT</button>
             <li>
                  <Link to="/">SignIn Page</Link>                  
             </li>
