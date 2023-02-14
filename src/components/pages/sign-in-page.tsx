@@ -17,7 +17,7 @@ export function SignInPage(){
     let existingUsernameBool = false;
     
       const[form,setForm] = useState<SignInForm>({username:"", password:""})
-  
+      const[name, setName] =useState("");
       async function handleUsernameVerification(){
         let results = await verifyUsername(form); 
         if( "detail" in results){
@@ -37,6 +37,9 @@ export function SignInPage(){
         }
         else{
           navy("/home");
+        }
+        function SaveUserLocalStorage(){
+          localStorage.setItem("username",name);
         }
         
       }

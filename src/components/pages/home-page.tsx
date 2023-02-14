@@ -8,18 +8,18 @@ export function HomePage(){
     
     <div style = {{display: 'flex', flexDirection: 'row'}}>
       <div style={{backgroundColor: 'powderblue',    }}>
-        <p>Invited Potlukks    </p>              
-         <p>Company Bash   </p>
+        <h1>Invited Potlukks    </h1>              
+        
       </div>
       <div style={{backgroundColor: 'skyblue',  }}>
-      <p>Attending Potlukks  </p>
+      <h1>Attending Potlukks  </h1>
       <p>Ryan's Shindig  </p>
       <p>Rotary Pizza Party  </p>
      
 
       </div>
       <div style={{backgroundColor: 'aliceblue',   }}>
-      <p>Notifications</p>
+      <h1>Notifications</h1>
       <p>Dish Added-Ryan's</p>
       <p>Reschedule-Pizza Party</p>
       <p>invite-Mountain ball</p>
