@@ -42,15 +42,13 @@ export async function getAllUsernames():Promise<UserSignIn[]>{
 
       const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body, headers:{"Content-Type":"application/json"}});
       const responseBody = await httpResponse.json();
-      const userList:UserSignIn[] = responseBody.data;
+      const userList:UserSignIn[] = responseBody.data.username;
       return userList;
 }
 
 
 
 export async function createLukker(newLukker: LukkerUserCreation):Promise<LukkerUserInfo>{
-
-    
 
     const httpResponse = await fetch("http://127.0.0.1:8000/lukkers", {
         method: "POST",
@@ -61,21 +59,11 @@ export async function createLukker(newLukker: LukkerUserCreation):Promise<Lukker
     });
 
     const createdLukker:LukkerUserInfo = await httpResponse.json();
-//    console.log(createdLukker);
     return createdLukker;
 }
-  
-export type LukkerUserInfoSearch = {
-    userId: number
-    username: string
-    fname: string
-    lname: string
-    allergies: Allergen[]
-}
 
+export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo | {detail:string}> {
 
-export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfoSearch> {
-    
     const httpResponse = await fetch("http://127.0.0.1:8000/verify", {
         method: "POST",
         body:JSON.stringify(user),
@@ -83,8 +71,7 @@ export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfoSear
             "Content-Type":"application/json"
         }
     });
+    const checkedUser:LukkerUserInfo = await httpResponse.json();
+    return checkedUser;    
 
-    const checkedUser:LukkerUserInfoSearch = await httpResponse.json();
-    return checkedUser;
-    
 }
