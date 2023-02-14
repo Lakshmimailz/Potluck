@@ -117,5 +117,6 @@ export function RegistrationPage(){
                 </fieldset>
 
                 <button onClick={handleRegistrationAction}>REGISTER</button>
+                
     </>
 }
