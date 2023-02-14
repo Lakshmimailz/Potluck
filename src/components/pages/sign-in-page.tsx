@@ -38,6 +38,7 @@ export function SignInPage(){
 
         <label htmlFor="password">PASSWORD: </label>
         <input type="password" placeholder="password" onChange={e => setForm({...form, password:e.target.value})} />
+        <br /><br />
 
         <button onClick={handleUsernameVerification} >SIGN IN</button>
         <br /><br />
