@@ -24,6 +24,11 @@ export function NavBar(){
             <li>
                 <Link to="/home">Home Page</Link>
             </li>
-        </ul>
+            <li>
+                <Link to="/potluckinfoguest/:potluckID">Guest Page</Link>
+            </li>
+            <li>
+                <Link to="/potluckinfohost/:potluckID">Host Page</Link>
+            </li>
     </>
 }
