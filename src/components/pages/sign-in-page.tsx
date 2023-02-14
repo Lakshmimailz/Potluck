@@ -11,6 +11,8 @@ export function SignInPage(){
     let existingUsernameBool = true;
     
       const[form,setForm] = useState<SignInForm>({username:"", password:""})
+      
+     
 
       async function handleUsernameVerification(){
         let results = await verifyUsername(form); 
@@ -23,12 +25,7 @@ export function SignInPage(){
           else{
             console.log("Hello")
           }
-          
-          
-
-        }
-       
-    
+          }
 // ALL OF THIS CODE IS TO CHECK IF USERNAME IS A PART OF THE SYSTEM. SIMILAR CODE WILL BE USED TO CHECK IF USERNAME IS UNIQUE IN REGISTRATION PAGE.
         
         
