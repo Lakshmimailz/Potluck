@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Outlet, useNavigate, redirect, Route, Routes } from "react-router-dom";
 import { createLukker, getAllUsernames, verifyUsername } from "../../api/potluck-request";
+import { HomePage } from "./home-page";
 
 export type SignInForm ={
     username: string
     password: string
 }
+export type UserSignIn = {
+  username: string
+  password: string
+}
 
 export function SignInPage(){
-    let existingUsernameBool = true;
+    const navy = useNavigate();
+    let existingUsernameBool = false;
     
       const[form,setForm] = useState<SignInForm>({username:"", password:""})
 
@@ -16,33 +22,28 @@ export function SignInPage(){
         let results = await verifyUsername(form); 
         if( "detail" in results){
           let usernameChecker = await getAllUsernames();
-          console.log(usernameChecker)
-          if(()=>usernameChecker.includes(form)){
-            console.log("form");
+          for (const users of usernameChecker){
+            if (users.username === form.username){
+                existingUsernameBool = true;
+                break;
+            }
+        }
+          if(existingUsernameBool){
+            alert("Incorrect Sign-In.\nPassword is Incorrect");
           }
           else{
-            console.log("Hello")
+            alert("Incorrect Sign-In.\nUsername does not exist.");
           }
-          
-          
-
         }
-       
-    
-// ALL OF THIS CODE IS TO CHECK IF USERNAME IS A PART OF THE SYSTEM. SIMILAR CODE WILL BE USED TO CHECK IF USERNAME IS UNIQUE IN REGISTRATION PAGE.
-        
-        
-        
-        // for (const users of usernameChecker){
-        //     if (users.username === form.username){
-        //         existingUsernameBool = false;
+        else{
+          navy("/home");
 
-
-        //     }
-        // }
+          
+        }
         
-
       }
+
+      // ALL OF THIS CODE IS TO CHECK IF USERNAME IS A PART OF THE SYSTEM. SIMILAR CODE WILL BE USED TO CHECK IF USERNAME IS UNIQUE IN REGISTRATION PAGE.
     
 
     return <>
@@ -53,9 +54,6 @@ export function SignInPage(){
         <br />
 
         <label htmlFor="password">PASSWORD: </label>
-
-       
-
         <input type="password" placeholder="password" onChange={e => setForm({...form, password:e.target.value})} />
         <br /><br />
 
@@ -67,5 +65,7 @@ export function SignInPage(){
         <Link to="registration">SIGN UP</Link>
 
         </fieldset>
+
+
     </>
 }
