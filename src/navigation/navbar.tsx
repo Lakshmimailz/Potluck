@@ -30,5 +30,6 @@ export function NavBar(){
             <li>
                 <Link to="/potluckinfohost/:potluckID">Host Page</Link>
             </li>
+        </ul>
     </>
 }
