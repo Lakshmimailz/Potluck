@@ -12,7 +12,7 @@ export type Dish = {
 
 export type Invitation = {
     status: InvitationStatus
-    potlukker: LukkerUserInfo
+    potlukker: LukkerUserInfo[]
 }
   
 
@@ -99,7 +99,7 @@ export enum PotlukkStatus {
     CANCELLED = "CANCELLED"
 }
 
-//newPotluck:PotlukkDetailsCreationInput
+//newPotluck:PotlukkCreationInput
 
 export async function createAPotluck():Promise<{potlukkId:number}> {
     const NewPL: PotlukkCreationInput = {

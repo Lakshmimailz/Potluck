@@ -8,6 +8,10 @@ export function HostPotluckPage(){
         let results = await createAPotluck();
     }
 
+    function handleDateTimeSetAction(){
+        
+    }
+
     return <>
         <h1> Host Page</h1>
 
@@ -16,7 +20,7 @@ export function HostPotluckPage(){
     <input type="time" placeholder="--:--"/>
     <br/><br/><br/>
 
-    <input type = "datetime-local"/><br/><br/><br/>
+    <input type = "datetime-local" onChange={handleDateTimeSetAction}/><br/><br/><br/>
 
     <input type="text" placeholder="Location"/><br/>
     <input type="text" placeholder="Description"/><br/><br/><br/>
