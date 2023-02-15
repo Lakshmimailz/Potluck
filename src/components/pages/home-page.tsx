@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 export function HomePage(){
 
-    
+ 
    
-  return (
+  return     <>
+    <h1> Home Page</h1>
     
     <div style = {{display: 'flex', flexDirection: 'row'}}>
       <div style={{backgroundColor: 'powderblue',    }}>
@@ -29,9 +30,9 @@ export function HomePage(){
       </div>
     </div>
     
-  );
   
-};
+  </>
+}
 
 
 
