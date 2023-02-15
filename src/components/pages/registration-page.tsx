@@ -1,6 +1,6 @@
 import { useReducer } from "react"
 import { useNavigate } from "react-router-dom"
-import { Allergen, createLukker, getAllUsernames, LukkerUserInfo } from "../../api/potluck-request"
+import { Allergen, createLukker, getAllUsernames, LukkerUserInfo } from "../../api/user-access-request"
 import { registrationReducer, RegistrationState } from "../../reducers/registration-reducer"
 
 

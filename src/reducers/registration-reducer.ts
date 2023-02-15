@@ -1,4 +1,4 @@
-import { Allergen, LukkerUserCreation } from "../api/potluck-request"
+import { Allergen, LukkerUserCreation } from "../api/user-access-request"
 
 export type RegistrationState ={
     userInfo:LukkerUserCreation

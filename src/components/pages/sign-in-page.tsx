@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAllUsernames, verifyUsername } from "../../api/potluck-request";
+import { getAllUsernames, verifyUsername } from "../../api/user-access-request";
 
 
 export type SignInForm ={
