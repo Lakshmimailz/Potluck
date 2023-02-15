@@ -13,10 +13,11 @@ export function HomePage(){
     navigation("/")
   }});
 
-    
+ 
    
+
   return <>
-    
+ 
     <div style = {{display: 'flex', flexDirection: 'row'}}>
       <div style={{backgroundColor: 'powderblue',    }}>
         <h1>Invited Potlukks    </h1>              
@@ -39,9 +40,9 @@ export function HomePage(){
       </div>
     </div>
     
-  </>
   
-};
+  </>
+}
 
 
 
