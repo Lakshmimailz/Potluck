@@ -30,7 +30,7 @@ function App() {
    
     <BrowserRouter>
     
-  <styleContext.Provider value={{style:globalStyle,setGlobalStyle:setGlobalStyle}}>
+    <styleContext.Provider value={{style:globalStyle,setGlobalStyle:setGlobalStyle}}>
    
     <NavBar></NavBar>
       <Routes>

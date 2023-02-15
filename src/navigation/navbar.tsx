@@ -7,8 +7,9 @@ export function NavBar(){
     const navigation = useNavigate();
     
     const {setGlobalStyle} = useContext(styleContext)
+
     function handleClearStorage(){
-        localStorage.removeItem("userid"); 
+        localStorage.clear(); 
         navigation("/");
     }
 
@@ -16,22 +17,22 @@ export function NavBar(){
         <ul>
             <button onClick={handleClearStorage}>LOGOUT</button>
             <li>
-                 <Link to="/">SignIn Page</Link>                  
+                 <Link to="/">Sign-In</Link>                  
             </li>
             <li>
-                <Link to="/registration">Registration Page</Link>
+                <Link to="/registration">Register</Link>
             </li>
             <li>
-                <Link to="/home">Home Page</Link>
+                <Link to="/home">Home</Link>
             </li>
             <li>
-                <Link to="/potluckinfoguest/:potluckID">Guest Details Page</Link>
+                <Link to="/potluckinfoguest/:potluckID">Guest Details</Link>
             </li>
             <li>
-                <Link to="/potluckinfohost/:potluckID">Host Details  Page</Link>
+                <Link to="/potluckinfohost/:potluckID">Host Details</Link>
             </li>
             <li>
-                <Link to="/hostpotluck/:potluckID">Host Page</Link>
+                <Link to="/hostpotluck/:potluckID">Host</Link>
             </li>
         </ul>
     </>

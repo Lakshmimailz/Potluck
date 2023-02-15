@@ -1,4 +1,12 @@
+import { createAPotluck } from "../../api/potluck-request";
+import { LukkerUserInfo, Allergen } from "../../api/user-access-request"
+
 export function HostPotluckPage(){
+    
+    
+    async function handlePotluckCreation(){
+        let results = await createAPotluck();
+    }
 
     return <>
         <h1> Host Page</h1>
@@ -13,7 +21,7 @@ export function HostPotluckPage(){
     <input type="text" placeholder="Location"/><br/>
     <input type="text" placeholder="Description"/><br/><br/><br/>
 
-    <button> Create</button><br/><br/><br/>
+    <button onClick={handlePotluckCreation}> Create</button><br/><br/><br/>
 
     <input type="search" placeholder="Search Lukkers"/><br/>
 

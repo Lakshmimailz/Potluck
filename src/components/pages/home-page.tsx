@@ -1,11 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { userInfo } from 'os';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function HomePage(){
+  const navigation = useNavigate();
+
+  useEffect(()=>{
+
+  const userCheck = localStorage.getItem("userid");
+  if(!userCheck){
+    alert("You have to sign in.")
+    navigation("/")
+  }});
 
     
    
-  return (
+  return <>
     
     <div style = {{display: 'flex', flexDirection: 'row'}}>
       <div style={{backgroundColor: 'powderblue',    }}>
@@ -29,7 +39,7 @@ export function HomePage(){
       </div>
     </div>
     
-  );
+  </>
   
 };
 

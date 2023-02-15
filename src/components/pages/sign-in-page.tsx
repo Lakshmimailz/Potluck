@@ -25,10 +25,10 @@ export function SignInPage(){
         }
       }
       if(existingUsernameBool){
-        alert("Incorrect Sign-In.\nPassword is Incorrect");
+        window.alert("Incorrect Sign-In.\nPassword is Incorrect");
       }
       else{
-        alert("Incorrect Sign-In.\nUsername does not exist.");
+        window.alert("Incorrect Sign-In.\nUsername does not exist.\nCreate a User by clicking SIGN UP");
       }
     }
     else{
