@@ -1,6 +1,8 @@
 import React, { createContext, CSSProperties, Dispatch, SetStateAction, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import { HomePage } from './components/pages/home-page';
+import { HostPotluckPage } from './components/pages/host-potluck-page';
 import { PotluckDetailsGuestPage } from './components/pages/potluck-details-guest-page';
 import { PotluckDetailsHostPage } from './components/pages/potluck-details-host-page';
 import { RegistrationPage } from './components/pages/registration-page';
@@ -37,6 +39,7 @@ function App() {
         <Route path='/registration' element={<RegistrationPage/>}/>
         <Route path='/potluckinfohost/:potluckID' element={<PotluckDetailsHostPage/>}/>
         <Route path='/potluckinfoguest/:potluckID' element={<PotluckDetailsGuestPage/>}/>
+        <Route path='/hostpotluck/:potluckID' element={<HostPotluckPage/>}/>
       </Routes>
 
       </styleContext.Provider>
