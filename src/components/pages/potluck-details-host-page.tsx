@@ -17,8 +17,9 @@ const initialState: PotlukkCreationInputState = {
     }
 }
 
-const[trackerState, dispatch] = useReducer(potluckCreationReducer, initialState);
 export function PotluckDetailsHostPage(){
+    const[trackerState, dispatch] = useReducer(potluckCreationReducer, initialState);
+
     function handleDateTimeAction(event:React.ChangeEvent<HTMLInputElement>){
         let unixEpochDate = +new Date(event.target.value)/1000;
         dispatch({type:"SET_DATE_TIME", payload:unixEpochDate})
