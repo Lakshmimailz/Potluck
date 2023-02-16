@@ -1,4 +1,5 @@
 import React, { createContext, CSSProperties, Dispatch, SetStateAction, useState } from 'react';
+import { QueryClientProvider, QueryClient } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { HomePage } from './components/pages/home-page';
@@ -22,12 +23,14 @@ const stylingDefault: GlobalStyling ={
   }
 }
 
+const queryClient = new QueryClient();
 export const styleContext = createContext(stylingDefault);
+
 function App() {
   const [globalStyle,setGlobalStyle] = useState(style)
  
   return <>
-   
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
     
     <styleContext.Provider value={{style:globalStyle,setGlobalStyle:setGlobalStyle}}>
@@ -45,6 +48,7 @@ function App() {
       </styleContext.Provider>
     
     </BrowserRouter>
+    </QueryClientProvider>
   </>
 }
 

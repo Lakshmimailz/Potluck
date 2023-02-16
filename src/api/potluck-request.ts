@@ -99,35 +99,37 @@ export enum PotlukkStatus {
     CANCELLED = "CANCELLED"
 }
 
-//newPotluck:PotlukkDetailsCreationInput
-
-export async function createAPotluck():Promise<{potlukkId:number}> {
-    const NewPL: PotlukkCreationInput = {
-        details:{
-            title: "Potluck2",
-            location: "",
-            status: PotlukkStatus.SCHEDULED,
-            description: "First is the worst. Second is the best",
-            isPublic: true,
-            time: 1676934000,
-            tags: []
-        },
-        hostId: 10111
-    }
-
+export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Potlukk> {
 
     const query = `mutation CreatePotluck($potluckInput: PotlukkCreationInput!){
         createPotlukk(input:$potluckInput){
-          potlukkId
+          ...on Potlukk{
+            potlukkId
+                details{
+                  title
+                  location
+                  status
+                  description
+                  isPublic
+                  time
+                  tags
+                }
+                host{
+                  userId
+                  username
+                  fname
+                  lname
+                  allergies
+                }
+          }
         }
       }`
 
-    const variables = {potluckInput:NewPL};
+    const variables = {potluckInput:newPotluck};
     const requestBody = JSON.stringify({query,variables});
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
     const responseBody = await httpResponse.json();
-    const potluck = responseBody.data
-
+    const potluck:Potlukk = responseBody.data.createPotlukk;
     return potluck
 
     
