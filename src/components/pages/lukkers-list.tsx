@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from 'react-query';
-import { potlukkCreationInputAction } from "../../reducers/host-page-reducer";
+
 import { LukkerUserInfo, getAllUsernames} from "../../api/user-access-request";
 import { potlukkCreationInvitationAction } from '../../reducers/potluck-info-reducer';
 
