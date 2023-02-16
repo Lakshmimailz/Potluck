@@ -1,9 +1,10 @@
 import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createAPotluck, Potlukk, PotlukkCreationInput, PotlukkStatus } from "../../api/potluck-request";
+import { createAPotluck, inviteALukker, Potlukk, PotlukkCreationInput, PotlukkStatus } from "../../api/potluck-request";
 import { LukkerUserInfo, Allergen } from "../../api/user-access-request"
 import { potluckCreationReducer, PotlukkCreationInputState } from "../../reducers/potluck-creation-reducer";
+import { LukkerList } from "./lukkers-list";
 
 const initialState: PotlukkCreationInputState = {
     input:{
@@ -100,7 +101,8 @@ export function HostPotluckPage(){
                 <h3>Potluck Attendees</h3>
                 <input type="search" placeholder="Search Lukkers"/><br/>
                 <input type="text" placeholder="Lukkers"/><br />
-                <button> Invite</button><br/><br/><br/>
+                <button onClick={inviteALukker}> Invite</button><br/><br/><br/>
+                
             </div>
             <div style={{width:"33%"}}>
                 <h3>Remove an Attendee</h3>

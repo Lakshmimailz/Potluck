@@ -134,3 +134,95 @@ export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Po
 
     
 }
+
+export type GroupInvite = {
+    invites: InvitationSendInput[]
+}
+
+
+export type InvitationSendInput = {
+    potlukkId: number
+    potlukkerId: number
+  }
+//invitation:GroupInvite
+
+export async function inviteALukker():Promise<Potlukk> {
+
+    const luk1: InvitationSendInput = {
+        potlukkId:193723,
+        potlukkerId:14658
+        
+    }
+    const luk2: InvitationSendInput = {
+        potlukkId:193723,
+        potlukkerId:89907
+        
+    }
+    const luk3: InvitationSendInput = {
+        potlukkId:193723,
+        potlukkerId: 70628
+        
+    }
+
+    const AllLukker: GroupInvite = {
+        invites:[]
+    }
+
+    AllLukker.invites.push(luk1);
+    AllLukker.invites.push(luk2);
+    AllLukker.invites.push(luk3);
+
+    const query = `mutation inviteLukker($invitee:InvitationSendInput!){
+        sendInvite(input:$invitee){
+          ...on Potlukk{
+            potlukkId
+                details{
+                  title
+                  location
+                  status
+                  description
+                  isPublic
+                  time
+                  tags
+                }
+                host{
+                  userId
+                  username
+                  fname
+                  lname
+                  allergies
+                }
+                invitations{
+                  status
+                  potlukker{
+                    userId
+                    username
+                    fname
+                    lname
+                    allergies
+                  }
+                }
+                dishes{
+                  name
+                  description
+                  broughtBy
+                  serves
+                  allergens
+                }
+            }
+        }
+      }`
+
+      console.log(AllLukker)
+
+    const variables = {potluckInput:AllLukker};
+    const requestBody = JSON.stringify({query,variables});
+    const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
+    const responseBody = await httpResponse.json();
+    console.log(responseBody);
+    const potluck:Potlukk = responseBody.data.sendInvite;
+    console.log(potluck)
+    return potluck
+
+    
+}
