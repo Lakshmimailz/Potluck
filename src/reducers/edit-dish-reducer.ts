@@ -1,10 +1,10 @@
 import { Action } from "@remix-run/router";
 
 export type UpdateDishState ={
-    UpdateDishState: any;
     name: string,
-    description: string,
-    servings: number,
+    description: string
+    broughtBy: number
+    serves: number
     allergens: string[]
 }
 export type SetDishNameAction={type:"SET_DISH_NAME",payload:string};
@@ -27,7 +27,7 @@ export function UpdateDishReducer(state:UpdateDishState, action:UpdateDishAction
             return nextState;
         }
         case "SET_SERVINGS":{
-            nextState.servings=action.payload;
+            nextState.serves=action.payload;
             return nextState;
         }
         case "SET_ALLERGEN":{
