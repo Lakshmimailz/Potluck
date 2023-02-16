@@ -1,10 +1,11 @@
 import { useReducer } from "react";
+import { UpdateDishState } from "../../reducers/edit-dish-reducer";
 import { CreationInputReducer, PotlukkCreationInputState } from "../../reducers/potluck-info-reducer";
 
 
 
 
-const initialState:PotlukkCreationInputState= {
+const initialState:UpdateDishState= {
     name: "",
     description: "",
         servs: 0,
