@@ -46,8 +46,7 @@ export async function getAllUsernames():Promise<UserList[]>{
           userId
           fname
           lname
-          allergies: Allergen[]
-        
+                  
         }
       }`;
 
