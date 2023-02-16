@@ -3,16 +3,18 @@
 import React from 'react'
 import { useQuery } from 'react-query';
 import { potlukkCreationInputAction } from "../../reducers/host-page-reducer";
-import {UserList, LukkerUserInfo} from "../../api/user-access-request";
+import { LukkerUserInfo, getAllUsernames} from "../../api/user-access-request";
+import { potlukkCreationInvitationAction } from '../../reducers/potluck-info-reducer';
+
 type LukkerListProps ={
     username:string,
-    dispatch: React.Dispatch<potlukkCreationInputAction>
+    dispatch: React.Dispatch<potlukkCreationInvitationAction>
 
 }
 
 export function LukkerList(props: LukkerListProps){
 
-    const{isLoading,isError,data=[]}= useQuery("UserList",LukkerUserInfo);
+    const{isLoading,isError,data=[]}= useQuery("UserList",getAllUsernames);
     if(isLoading){
         return <p>LOADING</p>
     }
