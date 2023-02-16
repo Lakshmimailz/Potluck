@@ -17,27 +17,22 @@ export function HomePage(){
    
 
   return <>
- 
     <div style = {{display: 'flex', flexDirection: 'row'}}>
-      <div style={{backgroundColor: 'powderblue',    }}>
-        <h1>Invited Potlukks    </h1>              
-        <Link to="/potluckdetailsguestpage">Company Bash</Link>
-      </div>
-      <div style={{backgroundColor: 'skyblue',  }}>
-      <h1>Hosted Potlukks  </h1>
-      <Link to="/potluckdetailshostpage">Ryan's Shindig  </Link><br/>
-      <Link to="/potluckdetailshostpage">Rotary Pizza Party  </Link>
-      
-     
-
-      </div>
-      <div style={{backgroundColor: 'aliceblue',   }}>
-      <h1>Notifications</h1>
-      <p>Dish Added-Ryan's</p>
-      <p>Reschedule-Pizza Party</p>
-      <p>invite-Mountain ball</p>
-
-      </div>
+        <div style={{backgroundColor: 'powderblue',    }}>
+            <h1>Invited Potlukks</h1>              
+            <Link to="/potluckdetailsguestpage">Company Bash</Link>
+        </div>
+        <div style={{backgroundColor: 'skyblue',  }}>
+           <h1>Hosted Potlukks  </h1>
+            <Link to="/potluckdetailshostpage">Ryan's Shindig  </Link><br/>
+            <Link to="/potluckdetailshostpage">Rotary Pizza Party  </Link>
+        </div>
+        <div style={{backgroundColor: 'aliceblue',   }}>
+            <h1>Notifications</h1>
+            <p>Dish Added-Ryan's</p>
+            <p>Reschedule-Pizza Party</p>
+            <p>invite-Mountain ball</p>
+        </div>
     </div>
     
   

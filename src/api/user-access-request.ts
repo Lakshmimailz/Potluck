@@ -88,3 +88,17 @@ export async function verifyUsername(user:UserSignIn):Promise<LukkerUserInfo | {
     return checkedUser;    
 
 }
+
+export async function findALukker(lukkerID:number):Promise<LukkerUserInfo| undefined>{
+    const httpResponse = await fetch("http://127.0.0.1:8000/lukkers/"+lukkerID);
+
+    if(httpResponse.status === 404){
+        alert(`No teams found`);
+        return;
+    }
+
+    const responseBody = await httpResponse.json();
+    const lukkerInfo:LukkerUserInfo = responseBody.data;
+    console.log(lukkerInfo);
+    return lukkerInfo;
+}
