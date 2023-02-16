@@ -5,6 +5,10 @@ export type UserSignIn = {
 
 export type UserList = {
     username: string
+    userId: number
+  
+    fname: string
+    lname: string
 }
 
 export type LukkerUserInfo = {
@@ -39,6 +43,11 @@ export async function getAllUsernames():Promise<UserList[]>{
     const query = `query FindAllUsernames{
         lukkers{
           username
+          userId
+          fname
+          lname
+          allergies: Allergen[]
+        
         }
       }`;
 

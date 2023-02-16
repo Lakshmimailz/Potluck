@@ -1,3 +1,5 @@
+import { LukkerUserInfo, UserList } from "../api/user-access-request"
+
 export type PotlukkCreationInputState={
     hostId:number
     title:string
@@ -5,15 +7,15 @@ export type PotlukkCreationInputState={
     description:string 
     time:number
     isPublic: boolean
-    potlukkerInvited:{potlukkerId:number, username:string}[]
+    potlukkerInvited:UserList[]
 }
 
-export type InvitationlukkerAction={type:"INVITE_TO_POTLUKK",payload:{potlukkerId:number, username:string}};
-export type RemovePotlukkerAction={type:"REMOVE_FROM_POTLUKK",payload:{potlukkerId:number, username:string}};
+export type InvitationlukkerAction={type:"INVITE_TO_POTLUKK",payload:UserList};
+export type RemovePotlukkerAction={type:"REMOVE_FROM_POTLUKK",payload:UserList};
 
-export type  potlukkCreationInputAction =InvitationlukkerAction | RemovePotlukkerAction
+export type  potlukkCreationInvitationAction =InvitationlukkerAction | RemovePotlukkerAction
 
-export function CreationInputReducer(state:PotlukkCreationInputState,action: potlukkCreationInputAction):PotlukkCreationInputState{
+export function CreationInputReducer(state:PotlukkCreationInputState,action: potlukkCreationInvitationAction):PotlukkCreationInputState{
     const newState:PotlukkCreationInputState = JSON.parse(JSON.stringify(state));
 
     switch(action.type){
@@ -22,7 +24,7 @@ export function CreationInputReducer(state:PotlukkCreationInputState,action: pot
             return newState
         }
         case "REMOVE_FROM_POTLUKK":{
-            newState.potlukkerInvited = newState.potlukkerInvited.filter(lukker => lukker.potlukkerId !== action.payload.potlukkerId)
+            newState.potlukkerInvited = newState.potlukkerInvited.filter(lukker => lukker.userId !== action.payload.userId)
             return newState
         }
         
