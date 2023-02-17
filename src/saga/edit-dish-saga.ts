@@ -1,4 +1,4 @@
-import { createAPotluck, Dish, inviteALukker } from "../api/potluck-request";
+import { createAPotluck, Dish, dishesAddAndUpdate, inviteALukker } from "../api/potluck-request";
 import {takeEvery, put, all, select} from "@redux-saga/core/effects"
 import { CreateDishFromFormAction, RequestPopulateDishesAction, RequestSaveDishesAction } from "../reducers/edit-dish-reducer";
 
@@ -15,7 +15,7 @@ export function* createDishFromFormData(action:CreateDishFromFormAction){
     yield put({type:"ADD_DISH", payload: dish});
 }
 export function* RequestPopulateDishes(action:RequestPopulateDishesAction){
-    const dish: Dish = yield createAPotluck();
+    const dish: Dish = yield dishesAddAndUpdate(dish);
     yield put({type:"UPDATE_DISH", payload:dish});
     
 }
