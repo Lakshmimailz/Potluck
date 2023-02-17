@@ -1,33 +1,31 @@
 import { userInfo } from 'os';
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { HomeHostedList } from './home-page-hosted-potlucks';
+import { HomeInvitedList } from './home-page-invited-potlucks';
 
 export function HomePage(){
   const navigation = useNavigate();
-
+  let currentUser = JSON.parse(JSON.stringify(localStorage.getItem('username')!));
   useEffect(()=>{
 
-  const userCheck = localStorage.getItem("userid");
-  if(!userCheck){
-    alert("You have to sign in.")
-    navigation("/")
-  }});
+  const userIDCheck = localStorage.getItem("userid");
+    if(!userIDCheck){
+      alert("You have to sign in.")
+      navigation("/")
+    }
+  });
+
 
  
    
 
   return <>
-    <div style = {{display: 'flex', flexDirection: 'row'}}>
-        <div style={{backgroundColor: 'powderblue',    }}>
-            <h1>Invited Potlukks</h1>              
-            <Link to="/potluckdetailsguestpage">Company Bash</Link>
-        </div>
-        <div style={{backgroundColor: 'skyblue',  }}>
-           <h1>Hosted Potlukks  </h1>
-            <Link to="/potluckdetailshostpage">Ryan's Shindig  </Link><br/>
-            <Link to="/potluckdetailshostpage">Rotary Pizza Party  </Link>
-        </div>
-        <div style={{backgroundColor: 'aliceblue',   }}>
+    <div style = {{display: 'flex', flexDirection: 'row', width:"80%", }}>
+      <HomeHostedList username={currentUser} />
+      <HomeInvitedList username={currentUser} />
+
+        <div style={{backgroundColor: 'aliceblue',  width:"33%" }}>
             <h1>Notifications</h1>
             <p>Dish Added-Ryan's</p>
             <p>Reschedule-Pizza Party</p>
