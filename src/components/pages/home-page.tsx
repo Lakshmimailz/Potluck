@@ -14,10 +14,7 @@ export function HomePage(){
       alert("You have to sign in.")
       navigation("/")
     }
-  });
-
-
- 
+  }); 
    
 
   return <>

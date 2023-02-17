@@ -45,8 +45,9 @@ export function PotluckDetailsHostPage(){
                 <input type="text" placeholder="Description" onChange={e=>dispatch({type:"SET_DESCRIPTION", payload:e.target.value})}/><br/><br/>
                 <input type="checkbox" id="publicStatus" onChange={handleSetPublicAction}/><label htmlFor="essential">Make Public?</label>
                 <br/><br />
+                <button>ADD</button><br/>
                 <button>Update</button><br/>
-                <button>Edit</button><br/>
+                
                 <button>Cancel</button><br/>
                 </div>
                 </div>

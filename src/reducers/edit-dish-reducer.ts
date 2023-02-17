@@ -5,7 +5,7 @@ import { Allergen } from "../api/user-access-request";
 export type UpdateDishState ={
     potlukkId: number
     dish: Dish
-    dishList: Dish[]
+    dishes: Dish[]
 
 }
 export type SetPotluckIdAction={type:"SET_POTLUCK_ID",payload:number};
@@ -13,15 +13,16 @@ export type SetDishNameAction={type:"SET_DISH_NAME",payload:string};
 export type SetDishDescriptionAction={type:"SET_DISH_DESCRIPTION",payload:string};
 export type SetServingsAction={type:"SET_SERVINGS",payload:number};
 export type SetAllergenAction={type:"SET_ALLERGEN",payload:Allergen};
-export type SetAddDishAction={type:"ADD_DISH",payload:Dish[]};
-export type SetUpdateDishAction={type:"UPDATE_DISH",payload:Dish[]};
+export type SetAddDishAction={type:"ADD_DISH",payload:Dish};
+export type SetUpdateDishAction={type:"UPDATE_DISH",payload:Dish};
+export type RemoveDishAction={type:"REMOVE_DISH",payload:Dish};
 
 export type CreateDishFromFormAction = {type:"CREATE_DISH_FROM_FORM", payload: Dish};
 export type RequestPopulateDishesAction = {type:"REQUEST_POPULATE_DISHES", payload: number};
 export type RequestSaveDishesAction = {type:"REQUEST_SAVE_DISHES", payload: number};
 
 export type UpdateDishAction =SetPotluckIdAction | SetDishNameAction | SetDishDescriptionAction | SetServingsAction | SetAllergenAction
-|SetAddDishAction | SetUpdateDishAction | CreateDishFromFormAction | RequestPopulateDishesAction | RequestSaveDishesAction
+|SetAddDishAction | SetUpdateDishAction | RemoveDishAction |CreateDishFromFormAction | RequestPopulateDishesAction | RequestSaveDishesAction
 
 export function UpdateDishReducer(state:UpdateDishState, action:UpdateDishAction): UpdateDishState{
 
@@ -48,19 +49,28 @@ export function UpdateDishReducer(state:UpdateDishState, action:UpdateDishAction
 
             if(nextState.dish.allergens.includes(allergenitem)){
                 nextState.dish.allergens = nextState.dish.allergens.filter(a => a !== allergenitem);
-                return nextState
+                return nextState;
             }else{
                 nextState.dish.allergens.push(allergenitem);
                 return nextState;
             }
         }
         case "ADD_DISH":{
-            nextState.dishList=action.payload;
+            nextState.dishes.push(action.payload);
             return nextState;
         }
         case "UPDATE_DISH":{
-            nextState.dishList=action.payload;
-            return nextState;   
+            if(nextState.dishes.includes(action.payload)){
+                nextState.dishes=nextState.dishes.filter(a=>a!==action.payload);
+                return nextState;
+            }else{
+                nextState.dishes.push(action.payload);
+                return nextState;
+            }           
+        }
+        case "REMOVE_DISH":{
+             nextState.dishes=nextState.dishes.filter(a=> a!== action.payload);
+             return nextState;
         }
 
         default:return nextState;

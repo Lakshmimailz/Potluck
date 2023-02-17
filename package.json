@@ -16,6 +16,7 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "redux-saga": "^1.2.2",
     "saga": "^4.0.0-alpha",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
