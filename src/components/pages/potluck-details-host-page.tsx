@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { PotlukkStatus } from "../../api/potluck-request";
 import { potluckCreationReducer, PotlukkCreationInputState } from "../../reducers/potluck-creation-reducer";
+import { AttendeesList } from "../attendee-list";
 
 const initialState: PotlukkCreationInputState = {
     input:{
@@ -49,6 +50,9 @@ export function PotluckDetailsHostPage(){
                 <button>Cancel</button><br/>
                 </div>
                 </div>
+                
+              
+                
 
                 
                 
