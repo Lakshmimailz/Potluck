@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { createAPotluck, inviteALukker, Potlukk, PotlukkCreationInput, PotlukkStatus } from "../../api/potluck-request";
@@ -25,9 +25,13 @@ export function HostPotluckPage(){
     let lukkerID: number = 0;
     const navigation = useNavigate();
     const queryClient = useQueryClient();
+    const [isVisible,setVisible] = useState<boolean>(false);
 
     const creationMutation = useMutation(createAPotluck, {
-        onSuccess: ()=> queryClient.invalidateQueries("potluckcache")
+        onSuccess: ()=>{
+            setVisible(true);
+            queryClient.invalidateQueries("potluckcache");
+        }
     })
 
     useEffect(()=>{
@@ -96,6 +100,8 @@ export function HostPotluckPage(){
                 <input type="checkbox" id="publicStatus" onChange={handleSetPublicAction}/><label htmlFor="essential">Make Public?</label>
                 <br/><br />
                 <button onClick={handlePotluckCreation}>Create</button>
+                <br />
+                {isVisible ? <h5>Potluck Created</h5> : <> </> }
             </div>
             <div style={{width:"33%"}}>
                 <h3>Potluck Attendees</h3>

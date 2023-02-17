@@ -22,7 +22,8 @@ export function HomeHostedList(props: HomeHostedListProps){
 
         <div style={{backgroundColor: 'powderblue',  width:"33%"  }}>
             <h1>Hosted Potlukks</h1>
-            {data.filter(potlukk => potlukk.host.username.includes(props.username)).map(p => <li key={Math.random()}><Link to="/potluckinfohost/:potluckID">{p.details.title}</Link></li> )}
+            {data.filter(potlukk => potlukk.host.username.includes(props.username)).map(p => 
+            <li key={Math.random()}><Link to={`/potluckinfohost/${p.potlukkId}`}>{p.details.title}</Link></li> )}
         </div>    
     </>
 }
