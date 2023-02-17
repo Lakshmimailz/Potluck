@@ -23,6 +23,7 @@ const initialState: PotlukkCreationInputState = {
 
 export function HostPotluckPage(){
     let lukkerID: number = 0;
+    let lukkerUsername: string = "";
     const navigation = useNavigate();
     const queryClient = useQueryClient();
     const [isVisible,setVisible] = useState<boolean>(false);
@@ -46,7 +47,11 @@ export function HostPotluckPage(){
 
     const[trackerState, dispatch] = useReducer(potluckCreationReducer, initialState);
 
-    
+    function handleSearchAction(event:React.ChangeEvent<HTMLInputElement>){
+        console.log(lukkerUsername);
+        lukkerUsername = event.target.value;
+        console.log(lukkerUsername);
+    }
 
     function handleDateTimeAction(event:React.ChangeEvent<HTMLInputElement>){
         let unixEpochDate = +new Date(event.target.value)/1000;
@@ -104,10 +109,11 @@ export function HostPotluckPage(){
                 {isVisible ? <h5>Potluck Created</h5> : <> </> }
             </div>
             <div style={{width:"33%"}}>
-                <h3>Potluck Attendees</h3>
-                <input type="search" placeholder="Search Lukkers"/><br/>
-                <input type="text" placeholder="Lukkers"/><br />
-                <button> Invite</button><br/><br/><br/>
+                <h3>Potluck Attendees</h3><br />
+                <h4>Search for someone to invite</h4>
+                <input type="search" placeholder="Search Lukkers" onChange={handleSearchAction}/><br/>
+                <LukkerList username={lukkerUsername} />
+                
                 
             </div>
             <div style={{width:"33%"}}>
