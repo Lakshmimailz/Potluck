@@ -1,6 +1,9 @@
 import { LukkerUserInfo, Allergen } from "./user-access-request"
 
-
+export type UpdateDish = {
+  potlukkId: number
+  dishes: Dish[]
+}
 
 export type Dish = {
     name: string
@@ -99,6 +102,11 @@ export enum PotlukkStatus {
     CANCELLED = "CANCELLED"
 }
 
+export type InvitationSendInput = {
+  potlukkId: number
+  potlukkerId: number
+}
+
 export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Potlukk> {
 
     const query = `mutation CreatePotluck($potluckInput: PotlukkCreationInput!){
@@ -130,14 +138,10 @@ export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Po
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
     const responseBody = await httpResponse.json();
     const potluck:Potlukk = responseBody.data.createPotlukk;
+    console.log(potluck);
     return potluck
 
     
-}
-
-export type InvitationSendInput = {
-  potlukkId: number
-  potlukkerId: number
 }
 
 export async function inviteALukker(invitation:InvitationSendInput):Promise<Potlukk> {
@@ -183,7 +187,7 @@ export async function inviteALukker(invitation:InvitationSendInput):Promise<Potl
         }
       }`
 
-    console.log(invitation)
+    
 
     const variables = {potluckInput:invitation};
     const requestBody = JSON.stringify({query,variables});
@@ -240,5 +244,36 @@ export async function findAllPotlucksInvitee():Promise<Potlukk[]> {
   const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
   const responseBody = await httpResponse.json();
   const potluck:Potlukk[] = responseBody.data.potlukks;
+  return potluck 
+}
+
+
+export async function dishesAddAndUpdate(theDish: UpdateDish):Promise<Potlukk> {
+
+  const query = `mutation AddADish($dishInput:DishesSwapInput!){
+    swapPotlukkDishes(input:$dishInput){
+      potlukkId
+      details{
+        title
+        description
+      }
+      host{
+        username
+      }
+      invitations{
+        potlukker{
+          username
+        }
+        status
+      }
+    }
+  }`
+
+
+  const variables = {dishInput:theDish};
+  const requestBody = JSON.stringify({query,variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
+  const responseBody = await httpResponse.json();
+  const potluck:Potlukk = responseBody.data.potlukks;
   return potluck 
 }
