@@ -1,15 +1,16 @@
 import React from 'react'
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { findAllPotlucksInvitee } from '../../api/potluck-request';
+import { findNotification } from '../../api/potluck-request';
 
 type HomeNotificationListProps ={
-    username:string
+    userId: number
 }
 
-export function HomeInvitedList(props: HomeNotificationListProps){
+export function HomeNoticeList(props: HomeNotificationListProps){
+ 
 
-    const{isLoading,isError,data=[]}= useQuery("InviteUserList",findAllPotlucksInvitee);
+    const{isLoading,isError,data=[]}= useQuery(["NoticeList", props.userId],()=>findNotification(props.userId));
     if(isLoading){
         return <p>LOADING</p>
     }
@@ -17,11 +18,11 @@ export function HomeInvitedList(props: HomeNotificationListProps){
         return <p>OH NO THERE WAS A PROBLEM</p>
     }
 
+      
     return <>
-        <div style={{backgroundColor: 'skyblue', width:"33%"}}>
-            <h1>Invited Potlukks</h1>
-            {data.filter(potlukk => potlukk.invitations.some(pin => pin.potlukker.username.includes(props.username))).map(p => 
-            <li key={Math.random()}><Link to={`/potluckinfohost/${p.potlukkId}`}>{p.details.title}</Link></li> )}
+        <div style={{backgroundColor: 'aliceblue',  width:"33%" }}>
+            <h1>Notifications</h1>
+            {data.map(p => <li key={p.eventId}><Link to={`/potluckinfoguest/${p.affectedPotlukkId}`}>{p.description}</Link></li> )}
         </div>    
     </>
 }
