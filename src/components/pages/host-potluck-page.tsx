@@ -101,7 +101,7 @@ export function HostPotluckPage(){
                 <h3>Potluck Attendees</h3>
                 <input type="search" placeholder="Search Lukkers"/><br/>
                 <input type="text" placeholder="Lukkers"/><br />
-                <button onClick={inviteALukker}> Invite</button><br/><br/><br/>
+                <button> Invite</button><br/><br/><br/>
                 
             </div>
             <div style={{width:"33%"}}>

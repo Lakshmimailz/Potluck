@@ -6,7 +6,6 @@ export type UserSignIn = {
 export type UserList = {
     username: string
     userId: number
-  
     fname: string
     lname: string
 }

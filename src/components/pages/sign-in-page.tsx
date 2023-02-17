@@ -32,7 +32,8 @@ export function SignInPage(){
       }
     }
     else{
-      localStorage.setItem("userid",String(results.userId)); 
+      localStorage.setItem("userid",String(results.userId));
+      localStorage.setItem("username",String(results.username)); 
       navigation("/home");
     }
   }
