@@ -7,13 +7,14 @@ import { UpdateDishReducer, UpdateDishState } from "../../reducers/edit-dish-red
 
 const initialState:UpdateDishState= {
    potlukkId: 0,
-   dish:{
+   dish: {
       name: "",
       description: "",
       broughtBy: 0,
       serves: 0,
       allergens: []
-   }
+   },
+   dishes: []
 }
 export function BringDish() {
    const [UpdateDishState, dispatch] = useReducer(UpdateDishReducer, initialState);
@@ -64,6 +65,8 @@ return <>
 
             <label htmlFor="text">TREENUT</label>
             <input type="checkbox" name="Treenut" onChange={()  => dispatch({ type: "SET_ALLERGEN", payload: Allergen.TREENUT })}  />
+
+            
 
    </fieldset>
 
