@@ -13,19 +13,24 @@ export type SetDishNameAction={type:"SET_DISH_NAME",payload:string};
 export type SetDishDescriptionAction={type:"SET_DISH_DESCRIPTION",payload:string};
 export type SetServingsAction={type:"SET_SERVINGS",payload:number};
 export type SetAllergenAction={type:"SET_ALLERGEN",payload:Allergen};
-export type SetAddDishAction={type:"ADD_DISH",payload:Dish};
+export type SetAddDishAction={type:"ADD_DISH"};
 export type SetUpdateDishAction={type:"UPDATE_DISH",payload:Dish};
 export type RemoveDishAction={type:"REMOVE_DISH",payload:Dish};
 
 export type CreateDishFromFormAction = {type:"CREATE_DISH_FROM_FORM", payload: Dish};
-export type RequestPopulateDishesAction = {type:"REQUEST_POPULATE_DISHES", payload: number};
-export type RequestSaveDishesAction = {type:"REQUEST_SAVE_DISHES", payload: number};
+export type RequestPopulateDishesAction = {type:"REQUEST_POPULATE_DISHES", payload: Dish};
+export type RequestSaveDishesAction = {type:"REQUEST_SAVE_DISHES", payload: Dish};
 
 export type UpdateDishAction =SetPotluckIdAction | SetDishNameAction | SetDishDescriptionAction | SetServingsAction | SetAllergenAction
 |SetAddDishAction | SetUpdateDishAction | RemoveDishAction |CreateDishFromFormAction | RequestPopulateDishesAction | RequestSaveDishesAction
 
-export function UpdateDishReducer(state:UpdateDishState, action:UpdateDishAction): UpdateDishState{
-
+export function UpdateDishReducer(state:UpdateDishState = {potlukkId:0, dish:{name: "",
+    description: "",
+    broughtBy: 0,
+    serves: 0,
+    allergens: []},
+ dishes:[]}, action:UpdateDishAction): UpdateDishState{
+ 
     const nextState:UpdateDishState=JSON.parse(JSON.stringify(state));
     switch (action.type) {
         case"SET_POTLUCK_ID":{
@@ -56,12 +61,12 @@ export function UpdateDishReducer(state:UpdateDishState, action:UpdateDishAction
             }
         }
         case "ADD_DISH":{
-            nextState.dishes.push(action.payload);
+            nextState.dishes.push(nextState.dish);
             return nextState;
         }
         case "UPDATE_DISH":{
             if(nextState.dishes.includes(action.payload)){
-                nextState.dishes=nextState.dishes.filter(a=>a!==action.payload);
+                nextState.dishes=nextState.dishes.filter(a=>a.name!==action.payload.name);
                 return nextState;
             }else{
                 nextState.dishes.push(action.payload);

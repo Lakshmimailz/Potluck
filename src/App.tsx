@@ -9,6 +9,11 @@ import { PotluckDetailsHostPage } from './components/pages/potluck-details-host-
 import { RegistrationPage } from './components/pages/registration-page';
 import { SignInPage } from './components/pages/sign-in-page';
 import { NavBar } from './navigation/navbar';
+import createSagaMiddleware from '@redux-saga/core';
+
+import { Provider } from 'react-redux';
+import { Action, applyMiddleware, createStore } from 'redux';
+import { UpdateDishReducer } from './reducers/edit-dish-reducer';
 
 const style: React.CSSProperties = {color:"green"};
 export type GlobalStyling = {
@@ -26,6 +31,8 @@ const stylingDefault: GlobalStyling ={
 const queryClient = new QueryClient();
 export const styleContext = createContext(stylingDefault);
 
+const dishStore = createStore(UpdateDishReducer);
+
 function App() {
   const [globalStyle,setGlobalStyle] = useState(style)
  
@@ -34,8 +41,11 @@ function App() {
     <BrowserRouter>
     
     <styleContext.Provider value={{style:globalStyle,setGlobalStyle:setGlobalStyle}}>
+    
    
     <NavBar></NavBar>
+      
+      <Provider store={dishStore}>
       <Routes>
         <Route path='/' element={<SignInPage/>}/>
         <Route path='/home' element={<HomePage/>}/>
@@ -44,6 +54,7 @@ function App() {
         <Route path='/potluckinfoguest/:potluckID' element={<PotluckDetailsGuestPage/>}/>
         <Route path='/hostpotluck/:potluckID' element={<HostPotluckPage/>}/>
       </Routes>
+      </Provider>
 
       </styleContext.Provider>
     
@@ -53,3 +64,4 @@ function App() {
 }
 
 export default App;
+
