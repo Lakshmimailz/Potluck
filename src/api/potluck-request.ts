@@ -34,7 +34,7 @@ export enum NotificationKind {
     POTLUKK_CANCELED = "POTLUKK_CANCELED",
     INVITE_ACCEPTED = "INVITE_ACCEPTED",
     INVITE_DECLIED = "INVITE_DECLIED",
-    INVITE_SEED = "INVITE_SEED"
+    INVITE_SENT = "INVITE_SENT"
 }
   
 export type Potlukk = {
@@ -145,6 +145,13 @@ export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Po
 }
 
 export async function inviteALukker(invitation:InvitationSendInput):Promise<Potlukk> {
+  const newNotice:PotlukkNotificationInput = {
+    kind: NotificationKind.INVITE_SENT,
+    description: " has been invited to ",
+    affectedPotlukkId: 0,
+    createdByUser: 0
+  }
+  let stringHolder: string | undefined = "";
 
     const query = `mutation inviteLukker($invitee:InvitationSendInput!){
         sendInvite(input:$invitee){
@@ -187,7 +194,6 @@ export async function inviteALukker(invitation:InvitationSendInput):Promise<Potl
         }
       }`
 
-    
 
     const variables = {potluckInput:invitation};
     const requestBody = JSON.stringify({query,variables});
@@ -195,8 +201,67 @@ export async function inviteALukker(invitation:InvitationSendInput):Promise<Potl
     const responseBody = await httpResponse.json();
     console.log(responseBody);
     const potluck:Potlukk = responseBody.data.sendInvite;
-    console.log(potluck)
+    newNotice.affectedPotlukkId = potluck.potlukkId;
+    newNotice.createdByUser = potluck.host.userId;
+    const inviteHolder: Invitation | undefined = potluck.invitations.find(a=> a.potlukker.userId === invitation.potlukkerId)
+    if(inviteHolder === undefined){
+      newNotice.description += potluck.details.title;
+      addNotification(newNotice);
+    }else{
+      stringHolder = inviteHolder.potlukker.fname + " " + inviteHolder.potlukker.lname;
+      newNotice.description = stringHolder+newNotice.description;
+      newNotice.description += potluck.details.title;
+      addNotification(newNotice);
+    }
     return potluck
+}
+
+
+export async function addNotification(newNotice:PotlukkNotificationInput):Promise<PotlukkNotification> {
+
+  const query = `mutation AddNotices($noticeInputs:PotlukkNotificationInput!){
+    addNotification(input:$noticeInputs){
+      eventId
+      timestamp
+      kind
+      description
+      affectedPotlukkId
+      createdByUser
+    }
+  }`
+
+  
+
+  const variables = {potluckInput:newNotice};
+  const requestBody = JSON.stringify({query,variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
+  const responseBody = await httpResponse.json();
+  const notice:PotlukkNotification = responseBody.data.addNotification;
+  console.log(notice)
+  return notice
+}
+
+export async function findNotification(userID:number):Promise<PotlukkNotification[]> {
+
+  const query = `query FindNotices($lukkerIdInput: Int!){
+    notifications(relaventLukkerId:$lukkerIdInput){
+      eventId
+      timestamp
+      kind
+      description
+      affectedPotlukkId
+      createdByUser
+    }
+  }`
+
+  
+
+  const variables = {lukkerIdInput:userID};
+  const requestBody = JSON.stringify({query,variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
+  const responseBody = await httpResponse.json();
+  const notice:PotlukkNotification[] = responseBody.data.notifications;
+  return notice
 }
 
 export async function findAllPotlucksHost():Promise<Potlukk[]> {

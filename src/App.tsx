@@ -9,12 +9,9 @@ import { PotluckDetailsHostPage } from './components/pages/potluck-details-host-
 import { RegistrationPage } from './components/pages/registration-page';
 import { SignInPage } from './components/pages/sign-in-page';
 import { NavBar } from './navigation/navbar';
-import createSagaMiddleware from '@redux-saga/core';
-
 import { Provider } from 'react-redux';
 import { Action, applyMiddleware, createStore } from 'redux';
 import { UpdateDishReducer } from './reducers/edit-dish-reducer';
-
 const style: React.CSSProperties = {color:"green"};
 export type GlobalStyling = {
   style:React.CSSProperties
