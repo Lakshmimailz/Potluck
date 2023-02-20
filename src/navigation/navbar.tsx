@@ -15,7 +15,6 @@ export function NavBar(){
 
     return <>
         <ul>
-            <button onClick={handleClearStorage}>LOGOUT</button>
             <li>
                  <Link to="/">Sign-In</Link>                  
             </li>
@@ -32,8 +31,9 @@ export function NavBar(){
                 <Link to="/potluckinfohost/:potluckID">Host Details</Link>
             </li>
             <li>
-                <Link to="/hostpotluck/:potluckID">Host</Link>
-            </li>
+                <Link to="/hostpotluck">Host Your own Potluck!!</Link>
+            </li><br />
+            <button onClick={handleClearStorage}>LOGOUT</button>
         </ul>
     </>
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { Link } from 'react-router-dom';
 import { findNotification } from '../../api/potluck-request';
 
@@ -8,9 +8,14 @@ type HomeNotificationListProps ={
 }
 
 export function HomeNoticeList(props: HomeNotificationListProps){
- 
+    const queryClient = useQueryClient(); 
+    
 
-    const{isLoading,isError,data=[]}= useQuery(["NoticeList", props.userId],()=>findNotification(props.userId));
+    const{isLoading,isError,data=[]}= useQuery(["NoticeList", props.userId],()=>findNotification(props.userId),{
+        onSuccess: ()=>{
+            queryClient.invalidateQueries("NoticeList");
+        }
+    });
     if(isLoading){
         return <p>LOADING</p>
     }

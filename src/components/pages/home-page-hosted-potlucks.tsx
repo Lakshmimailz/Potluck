@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { Link } from 'react-router-dom';
 import { findAllPotlucksHost } from '../../api/potluck-request';
 
@@ -8,8 +8,13 @@ type HomeHostedListProps ={
 }
 
 export function HomeHostedList(props: HomeHostedListProps){
+    const queryClient = useQueryClient();
 
-    const{isLoading,isError,data=[]}= useQuery("UserList",findAllPotlucksHost);
+    const{isLoading,isError,data=[]}= useQuery("UserList",findAllPotlucksHost,{
+        onSuccess: ()=>{
+            queryClient.invalidateQueries("InviteUserList");
+        }
+    });
     if(isLoading){
         return <p>LOADING</p>
     }

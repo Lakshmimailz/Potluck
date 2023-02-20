@@ -1,6 +1,6 @@
-import { userInfo } from 'os';
+
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { HomeHostedList } from './home-page-hosted-potlucks';
 import { HomeInvitedList } from './home-page-invited-potlucks';
 import { HomeNoticeList } from './home-page-notifications';
@@ -8,7 +8,7 @@ import { HomeNoticeList } from './home-page-notifications';
 export function HomePage(){
   const navigation = useNavigate();
   let currentUser = JSON.parse(JSON.stringify(localStorage.getItem('username')!));
-  let userIdNum: number = 0;
+  let userIdNum: number = Number(localStorage.getItem("userid"));
   useEffect(()=>{
 
   const userIDCheck = localStorage.getItem("userid");

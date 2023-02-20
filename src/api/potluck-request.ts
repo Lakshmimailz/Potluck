@@ -138,10 +138,7 @@ export async function createAPotluck(newPotluck:PotlukkCreationInput):Promise<Po
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{"Content-Type":"application/json"}});
     const responseBody = await httpResponse.json();
     const potluck:Potlukk = responseBody.data.createPotlukk;
-    console.log(potluck);
     return potluck
-
-    
 }
 
 export async function inviteALukker(invitation:InvitationSendInput):Promise<Potlukk> {
@@ -151,7 +148,7 @@ export async function inviteALukker(invitation:InvitationSendInput):Promise<Potl
     affectedPotlukkId: 0,
     createdByUser: 0
   }
-  let stringHolder: string | undefined = "";
+  let stringHolder: string = "";
 
     const query = `mutation inviteLukker($invitee:InvitationSendInput!){
         sendInvite(input:$invitee){
