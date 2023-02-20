@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/Potluck/static/js/main.b78de840.js",
+    "index.html": "/Potluck/index.html",
+    "main.b78de840.js.map": "/Potluck/static/js/main.b78de840.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.b78de840.js"
+  ]
+}
