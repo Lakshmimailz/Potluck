@@ -1,36 +1,28 @@
 import { LukkerUserInfo, UserList } from "../api/user-access-request"
 
-export type PotlukkCreationInputState={
-    hostId:number
-    title:string
-    location:string
-    description:string 
-    time:number
-    isPublic: boolean
-    
-    potlukkerInvited:UserList[]
-}
+export type InvitationSendInputState = {
+    potlukkId: number
+    potlukkerId: number
+  }
 
-export type InvitationlukkerAction={type:"INVITE_TO_POTLUKK",payload:UserList};
-export type RemovePotlukkerAction={type:"REMOVE_FROM_POTLUKK",payload:UserList};
-export type SetServingsAction={type:"SET_SERVINGS",payload:number};
+export type SetPotluckIdAction={type:"SET_POTLUCK_ID",payload:number};
+export type SetPotluckerIdAction={type:"SET_POTLUCKER_ID",payload:number};
 
-export type  potlukkCreationInvitationAction =InvitationlukkerAction | RemovePotlukkerAction 
+export type  potlukkCreationInvitationAction = SetPotluckIdAction | SetPotluckerIdAction 
 
-export function CreationInputReducer(state:PotlukkCreationInputState,action: potlukkCreationInvitationAction):PotlukkCreationInputState{
-    const newState:PotlukkCreationInputState = JSON.parse(JSON.stringify(state));
+export function inviteInputReducer(state:InvitationSendInputState,action: potlukkCreationInvitationAction):InvitationSendInputState{
+    const newState:InvitationSendInputState = JSON.parse(JSON.stringify(state));
 
     switch(action.type){
-        case "INVITE_TO_POTLUKK":{
-            newState.potlukkerInvited.push(action.payload)
+        case "SET_POTLUCK_ID":{
+            newState.potlukkId = action.payload;
             return newState
         }
-        case "REMOVE_FROM_POTLUKK":{
-            newState.potlukkerInvited = newState.potlukkerInvited.filter((lukker: { userId: number }) => lukker.userId !== action.payload.userId)
+        case "SET_POTLUCKER_ID":{
+            newState.potlukkerId = action.payload;
+            console.log(newState);
             return newState;
         }
-        
-        default:return newState;
     }
 
 }

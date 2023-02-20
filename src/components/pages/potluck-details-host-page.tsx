@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import { useNavigate } from "react-router";
 import { PotlukkStatus } from "../../api/potluck-request";
 import { potluckCreationReducer, PotlukkCreationInputState } from "../../reducers/potluck-creation-reducer";
 import { AttendeesList } from "../attendee-list";
@@ -19,6 +20,18 @@ const initialState: PotlukkCreationInputState = {
 }
 
 export function PotluckDetailsHostPage(){
+    let lukkerID: number = Number(localStorage.getItem("userid"));
+    const navigation = useNavigate();
+    useEffect(()=>{
+        const userCheck = localStorage.getItem("userid");
+        if(!userCheck){
+            alert("You have to sign in.")
+            navigation("/")
+        }else{
+            lukkerID = Number(userCheck);
+        }
+    });
+    
     const[trackerState, dispatch] = useReducer(potluckCreationReducer, initialState);
 
     function handleDateTimeAction(event:React.ChangeEvent<HTMLInputElement>){

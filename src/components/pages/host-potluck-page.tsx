@@ -1,8 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
 import { createAPotluck, inviteALukker, Potlukk, PotlukkCreationInput, PotlukkStatus } from "../../api/potluck-request";
-import { LukkerUserInfo, Allergen } from "../../api/user-access-request"
 import { potluckCreationReducer, PotlukkCreationInputState } from "../../reducers/potluck-creation-reducer";
 import { LukkerList } from "./lukkers-list";
 
@@ -22,8 +21,7 @@ const initialState: PotlukkCreationInputState = {
 }
 
 export function HostPotluckPage(){
-    let lukkerID: number = 0;
-    let lukkerUsername: string = "";
+    let lukkerID: number = Number(localStorage.getItem("userid"));
     const navigation = useNavigate();
     const queryClient = useQueryClient();
     const [isVisible,setVisible] = useState<boolean>(false);
@@ -31,8 +29,8 @@ export function HostPotluckPage(){
     const creationMutation = useMutation(createAPotluck, {
         onSuccess: ()=>{
             setVisible(true);
-            queryClient.invalidateQueries("potluckcache");
-        }
+            queryClient.invalidateQueries("potluckcached");
+        },
     })
 
     useEffect(()=>{
@@ -47,25 +45,20 @@ export function HostPotluckPage(){
 
     const[trackerState, dispatch] = useReducer(potluckCreationReducer, initialState);
 
-    function handleSearchAction(event:React.ChangeEvent<HTMLInputElement>){
-        console.log(lukkerUsername);
-        lukkerUsername = event.target.value;
-        console.log(lukkerUsername);
-    }
+    
 
     function handleDateTimeAction(event:React.ChangeEvent<HTMLInputElement>){
         let unixEpochDate = +new Date(event.target.value)/1000;
         dispatch({type:"SET_DATE_TIME", payload:unixEpochDate})
+        dispatch({type:"SET_HOST_ID", payload:lukkerID});
+        dispatch({type:"SET_STATUS", payload:PotlukkStatus.SCHEDULED});
     }
 
     function handleSetPublicAction(event:React.ChangeEvent<HTMLInputElement>){
         dispatch({type:"SET_PUBLIC_TAG", payload:Boolean(event.target.checked)})
     }
     
-    async function handlePotluckCreation(){
-        dispatch({type:"SET_HOST_ID", payload:lukkerID});
-        dispatch({type:"SET_STATUS", payload:PotlukkStatus.SCHEDULED});
-
+    function handlePotluckCreation(){
         const newPotluck: PotlukkCreationInput = {
             hostId: trackerState.input.hostId,
             details:{
@@ -78,17 +71,11 @@ export function HostPotluckPage(){
                 tags: trackerState.input.details.tags
             }
         }
-
-
-        const returnedPotluck = creationMutation.mutate(newPotluck);
-        console.log(returnedPotluck);
-        // if ("potlukkId" in returnedPotluck){
-
-        // }
-        // localStorage.setItem("potluckId",String(returnedPotluck.potlukkId));
-
-        // alert("Registration Successful!!!");
-        // navigation("/home");
+        creationMutation.mutate(newPotluck,{
+            onSuccess: data =>{
+                localStorage.setItem("potluckId",String(data.potlukkId))
+            }
+        });
     }
 
     return <>
@@ -109,12 +96,7 @@ export function HostPotluckPage(){
                 {isVisible ? <h5>Potluck Created</h5> : <> </> }
             </div>
             <div style={{width:"33%"}}>
-                <h3>Potluck Attendees</h3><br />
-                <h4>Search for someone to invite</h4>
-                <input type="search" placeholder="Search Lukkers" onChange={handleSearchAction}/><br/>
-                <LukkerList username={lukkerUsername} />
-                
-                
+                <LukkerList potlukkId={Number(localStorage.getItem("potluckId"))} potlukkerId={0}/>
             </div>
             <div style={{width:"33%"}}>
                 <h3>Remove an Attendee</h3>

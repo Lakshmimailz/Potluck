@@ -9,9 +9,9 @@ import { PotluckDetailsHostPage } from './components/pages/potluck-details-host-
 import { RegistrationPage } from './components/pages/registration-page';
 import { SignInPage } from './components/pages/sign-in-page';
 import { NavBar } from './navigation/navbar';
-import { Provider } from 'react-redux';
-import { Action, applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { UpdateDishReducer } from './reducers/edit-dish-reducer';
+import { Provider } from 'react-redux';
 const style: React.CSSProperties = {color:"green"};
 export type GlobalStyling = {
   style:React.CSSProperties
@@ -49,7 +49,7 @@ function App() {
         <Route path='/registration' element={<RegistrationPage/>}/>
         <Route path='/potluckinfohost/:potluckID' element={<PotluckDetailsHostPage/>}/>
         <Route path='/potluckinfoguest/:potluckID' element={<PotluckDetailsGuestPage/>}/>
-        <Route path='/hostpotluck/:potluckID' element={<HostPotluckPage/>}/>
+        <Route path='/hostpotluck' element={<HostPotluckPage/>}/>
       </Routes>
       </Provider>
 

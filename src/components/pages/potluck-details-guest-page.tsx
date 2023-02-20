@@ -1,6 +1,8 @@
 import { UpdateDishAction, UpdateDishState } from "../../reducers/edit-dish-reducer";
 import { BringDish } from "./edit-dishes";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 
 export type dish = {
@@ -13,6 +15,19 @@ export type dish = {
 
 
 export function PotluckDetailsGuestPage(){
+    let lukkerID: number = Number(localStorage.getItem("userid"));
+    const navigation = useNavigate();
+    useEffect(()=>{
+        const userCheck = localStorage.getItem("userid");
+        if(!userCheck){
+            alert("You have to sign in.")
+            navigation("/")
+        }else{
+            lukkerID = Number(userCheck);
+        }
+    });
+
+
     const Mydish:dish={
         name:"",
         description:"",
